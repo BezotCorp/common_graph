@@ -1,8 +1,10 @@
-//! Fondations communes et réutilisables des graphes BezotCorp.
+#![allow(clippy::struct_field_names, clippy::must_use_candidate)]
+
+//! Common and reusable foundations for `BezotCorp` graphs.
 //!
-//! Ce crate contient uniquement les types structurels communs.
-//! Il ne contient aucune connaissance métier liée aux modèles IA,
-//! aux providers, au dataset ou au routage.
+//! This crate contains only shared structural graph types.
+//! It contains no business knowledge related to AI models,
+//! providers, datasets, or routing.
 
 mod base;
 mod id;
