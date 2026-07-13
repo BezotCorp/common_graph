@@ -1,0 +1,22 @@
+{
+  "name": "common-graph-release-automation",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Release automation for the common_graph Rust crate",
+  "scripts": {
+    "setup": "pnpm install --lockfile-only --ignore-workspace && cargo build --all-targets --all-features",
+    "release:dry": "../node_modules/.bin/semantic-release --dry-run --no-ci",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/release-notes-generator": "^14.1.1",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "semantic-release": "^25.0.5"
+  },
+  "packageManager": "pnpm@10.13.1"
+}

@@ -1,31 +1,42 @@
 name: CI
 
 on:
-  push:
   pull_request:
+    branches:
+      - dev
+      - main
+
+  push:
+    branches:
+      - dev
+      - main
+      - "feat/**"
+      - "feature/**"
+      - "fix/**"
+      - "test/**"
+      - "chore/**"
+      - "ci/**"
+      - "refactor/**"
+
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  CARGO_TERM_COLOR: always
-
 jobs:
-  checks:
-    name: Rust checks
+  validate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Rust
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: "1.85"
