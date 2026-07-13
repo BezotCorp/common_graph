@@ -4,7 +4,7 @@ use std::str::FromStr;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use uuid::Uuid;
 
-/// Erreur retournée lorsqu'un identifiant de graphe est invalide.
+/// Error returned when a graph identifier is invalid.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct GraphIdParseError {
     string_message: String,
@@ -26,27 +26,26 @@ impl fmt::Display for GraphIdParseError {
 
 impl std::error::Error for GraphIdParseError {}
 
-/// Identifiant unique et fortement typé d'un nœud.
+/// Unique and strongly typed node identifier.
 ///
-/// La représentation interne est entièrement encapsulée par `common_graph`.
-/// Les nouveaux identifiants sont toujours générés en UUIDv7.
+/// The internal representation is fully encapsulated by `common_graph`.
+/// New identifiers are always generated as `UUIDv7`.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct NodeId(Uuid);
 
 impl NodeId {
+    /// Generates a new node identifier as `UUIDv7`.
     pub fn new() -> Self {
         Self(Uuid::now_v7())
     }
 
     fn parse(string_value: &str) -> Result<Self, GraphIdParseError> {
         let struct_uuid = Uuid::parse_str(string_value).map_err(|struct_error| {
-            GraphIdParseError::new(format!("identifiant de nœud invalide : {struct_error}"))
+            GraphIdParseError::new(format!("invalid node identifier: {struct_error}"))
         })?;
 
         if struct_uuid.get_version_num() != 7 {
-            return Err(GraphIdParseError::new(
-                "un identifiant de nœud doit être un UUIDv7",
-            ));
+            return Err(GraphIdParseError::new("a node identifier must be a UUIDv7"));
         }
 
         Ok(Self(struct_uuid))
@@ -98,27 +97,28 @@ impl<'de> Deserialize<'de> for NodeId {
     }
 }
 
-/// Identifiant unique et fortement typé d'une arête.
+/// Unique and strongly typed edge identifier.
 ///
-/// `EdgeId` reste distinct de `NodeId`, ce qui empêche Rust de les mélanger.
-/// La représentation interne est entièrement encapsulée par `common_graph`.
-/// Les nouveaux identifiants sont toujours générés en UUIDv7.
+/// `EdgeId` remains distinct from `NodeId`, preventing accidental mixing.
+/// The internal representation is fully encapsulated by `common_graph`.
+/// New identifiers are always generated as `UUIDv7`.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct EdgeId(Uuid);
 
 impl EdgeId {
+    /// Generates a new edge identifier as `UUIDv7`.
     pub fn new() -> Self {
         Self(Uuid::now_v7())
     }
 
     fn parse(string_value: &str) -> Result<Self, GraphIdParseError> {
         let struct_uuid = Uuid::parse_str(string_value).map_err(|struct_error| {
-            GraphIdParseError::new(format!("identifiant d'arête invalide : {struct_error}"))
+            GraphIdParseError::new(format!("invalid edge identifier: {struct_error}"))
         })?;
 
         if struct_uuid.get_version_num() != 7 {
             return Err(GraphIdParseError::new(
-                "un identifiant d'arête doit être un UUIDv7",
+                "an edge identifier must be a UUIDv7",
             ));
         }
 

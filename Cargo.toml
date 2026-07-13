@@ -1,13 +1,38 @@
 [package]
 name = "common_graph"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2024"
+rust-version = "1.85"
 
-description = "Common structural foundations for BezotCorp Rust graphs"
+description = "Common structural foundations for strongly typed Rust graphs"
 license = "Apache-2.0"
 repository = "https://github.com/BezotCorp/common_graph"
+documentation = "https://docs.rs/common_graph"
 readme = "README.md"
+
+keywords = ["graph", "typed-ids", "uuid", "data-structures", "bezotcorp"]
+
+categories = ["data-structures"]
+
+include = ["/src/**", "/README.md", "/LICENSE", "/NOTICE"]
+
 [dependencies]
-chrono.workspace = true
-serde.workspace = true
-uuid.workspace = true
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+uuid = { version = "1", features = ["v7", "serde"] }
+
+[dev-dependencies]
+ron = "0.12.2"
+serde_json = "1.0.150"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[lints.clippy]
+all = "warn"
+pedantic = "warn"

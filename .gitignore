@@ -1,2 +1,4 @@
 target
 data
+# Release automation dependencies
+node_modules/
