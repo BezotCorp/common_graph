@@ -3,9 +3,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 
 use crate::{EdgeId, NodeId};
 
-/// Données communes à tous les nœuds.
+/// Common structural data shared by all nodes.
 ///
-/// Les nœuds concrets ajoutent leurs données par composition.
+/// Concrete node types extend this data through composition.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct NodeBase {
     struct_id: NodeId,
@@ -14,6 +14,7 @@ pub struct NodeBase {
 }
 
 impl NodeBase {
+    /// Creates a node base with a fresh identifier and current timestamps.
     pub fn new() -> Self {
         let struct_now = Utc::now();
 
@@ -24,20 +25,28 @@ impl NodeBase {
         }
     }
 
+    /// Returns the node identifier.
     pub const fn struct_id(&self) -> &NodeId {
         &self.struct_id
     }
 
+    /// Returns the node creation timestamp.
     pub const fn struct_created_at(&self) -> &DateTime<Utc> {
         &self.struct_created_at
     }
 
+    /// Returns the node update timestamp.
     pub const fn struct_updated_at(&self) -> &DateTime<Utc> {
         &self.struct_updated_at
     }
 
+    /// Updates the node modification timestamp without allowing it to regress.
     pub fn update_timestamp(&mut self) {
-        self.struct_updated_at = Utc::now();
+        let struct_now = Utc::now();
+
+        if struct_now > self.struct_updated_at {
+            self.struct_updated_at = struct_now;
+        }
     }
 }
 
@@ -77,10 +86,10 @@ impl<'de> Deserialize<'de> for NodeBase {
     }
 }
 
-/// Données communes à toutes les arêtes.
+/// Common structural data shared by all edges.
 ///
-/// Cette base ne contient aucune information imposant une forme
-/// orientée, non orientée ou hypergraphe.
+/// This base deliberately contains no information that imposes a directed,
+/// undirected, or hypergraph structure.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct EdgeBase {
     struct_id: EdgeId,
@@ -89,6 +98,7 @@ pub struct EdgeBase {
 }
 
 impl EdgeBase {
+    /// Creates an edge base with a fresh identifier and current timestamps.
     pub fn new() -> Self {
         let struct_now = Utc::now();
 
@@ -99,20 +109,28 @@ impl EdgeBase {
         }
     }
 
+    /// Returns the edge identifier.
     pub const fn struct_id(&self) -> &EdgeId {
         &self.struct_id
     }
 
+    /// Returns the edge creation timestamp.
     pub const fn struct_created_at(&self) -> &DateTime<Utc> {
         &self.struct_created_at
     }
 
+    /// Returns the edge update timestamp.
     pub const fn struct_updated_at(&self) -> &DateTime<Utc> {
         &self.struct_updated_at
     }
 
+    /// Updates the edge modification timestamp without allowing it to regress.
     pub fn update_timestamp(&mut self) {
-        self.struct_updated_at = Utc::now();
+        let struct_now = Utc::now();
+
+        if struct_now > self.struct_updated_at {
+            self.struct_updated_at = struct_now;
+        }
     }
 }
 
