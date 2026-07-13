@@ -2,7 +2,7 @@
 name = "common_graph"
 version = "0.0.0"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.97"
 
 description = "Common structural foundations for strongly typed Rust graphs"
 license = "Apache-2.0"
@@ -18,8 +18,8 @@ include = ["/src/**", "/README.md", "/LICENSE", "/NOTICE"]
 
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
-serde = { version = "1", features = ["derive"] }
-uuid = { version = "1", features = ["v7", "serde"] }
+serde = { version = "1.0.228", features = ["derive"] }
+uuid = { version = "1.23.5", features = ["v7", "serde"] }
 
 [dev-dependencies]
 ron = "0.12.2"
