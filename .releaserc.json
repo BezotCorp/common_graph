@@ -39,7 +39,7 @@
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "cargo publish --allow-dirty"
+        "publishCmd": "cargo publish --dry-run --allow-dirty && cargo publish --allow-dirty"
       }
     ],
     [
